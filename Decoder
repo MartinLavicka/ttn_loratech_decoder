@@ -1,0 +1,19 @@
+function map_range(value, low1, high1, low2, high2) {
+    return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
+}
+
+function Decoder(bytes, port) {
+  var stav = bytes[0];
+  var bat = Math.round((map_range(bytes[1],1,254,2,3.4))*100 ) / 100;
+  var temp = bytes[2]-40;
+  var hum = bytes[3];
+  var press = (bytes [4] << 8 | bytes[5]) / 10;
+  
+  return {
+    stav: stav,
+    battery: bat,
+    temperature: temp,
+    humidity: hum,
+    pressure: press
+  }
+}
